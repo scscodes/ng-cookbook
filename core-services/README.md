@@ -1,27 +1,69 @@
-# NgCookbook
+# Core Services
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.2.
+`session.service` - bootstrap application. initialize view timers.
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+`data-broker.service` - consolidated destination for outbound logs. manage and send buffer.
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+`event-listener.service` - dom, event handling log collection. forward logs to buffer.
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+`nav-listener.service` - navigation, router log collection. forward logs to buffer.
 
-## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
+# Cache Busting with Build Version Increments
+> Note! Assumes and increments patch value, given `major.minor.patch` in `package.json`
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Environment-based build commands are prefaced by an increment script, updates `package.json` and `environment.ts` version and timestamp fields.
+Should a browser cache third-party assets (ex: fontawesome), the change in version # will force a new query.
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+`increment-version.js` - set version and timestamp for flagged environment.
+
+* Define or update `environment.ts`, and any other environment-specific `environment.<env>.ts`
+```typescript
+// environment.ts
+export const environment = {
+  production: false,
+  version: '0.0.0',
+  buildTimestamp: ''
+};
+
+```
+
+
+* Update `angular.json` build configurations, set file replacements as needed
+```json
+{
+  "development": {
+    "fileReplacements": [
+      {
+        "replace": "src/environments/environment.ts",
+        "with": "src/environments/environment.dev.ts"
+      }
+    ]
+  },
+  "production": {
+    "fileReplacements": [
+      {
+        "replace": "src/environments/environment.ts",
+        "with": "src/environments/environment.prod.ts"
+      }
+    ]
+  }
+}
+```
+
+* Update `package.json` scripts, including environment-specific version and build config
+```json
+{
+  "scripts": {
+    "start:dev": "ng serve --configuration development",
+    "start:prod": "ng serve --configuration production",
+    "build:dev": "node increment-version.js development && ng build --configuration development",
+    "build:prod": "node increment-version.js production && ng build --configuration production"
+ }
+}
+```

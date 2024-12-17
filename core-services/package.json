@@ -1,10 +1,14 @@
 {
   "name": "ng-cookbook",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:dev": "ng serve --configuration development",
+    "start:prod": "ng serve --configuration production",
     "build": "ng build",
+    "build:dev": "node increment-version.js development && ng build --configuration development",
+    "build:prod": "node increment-version.js production && ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

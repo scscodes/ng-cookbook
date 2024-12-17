@@ -1,8 +1,6 @@
 import { Routes } from '@angular/router';
+import {GenericComponent} from "./generic.component";
 
-export const routes: Routes = [];
-
-// const routes = [
-//   { path: '', component: RouterOutlet, pathMatch: 'full' },
-//   { path: 'dashboard', component: RouterOutlet }
-// ];
+export const routes: Routes = [
+  { path: '', component: GenericComponent }
+];
