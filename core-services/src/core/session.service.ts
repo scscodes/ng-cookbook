@@ -1,4 +1,6 @@
 import {computed, Injectable, signal} from '@angular/core';
+import {EventListenerService} from "./collection/event-listener.service";
+import {DataBrokerService} from "./collection/data-broker.service";
 
 /**
  * This service manages session-related information, including tracking user activity,
@@ -24,7 +26,7 @@ export class SessionService {
     return now - this.lastInteractionTime > this.idleThreshold;
   });
 
-  constructor() {
+  constructor(private els: EventListenerService, private dbs: DataBrokerService) {
     // Periodically update durations
     setInterval(() => this.updateDurations(), 1000);
   }
