@@ -1,6 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppComponent } from './app.component';
-
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {AppComponent} from './app.component';
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
   let app: AppComponent;
@@ -14,12 +13,13 @@ describe('AppComponent', () => {
     app = fixture.componentInstance; // Reusable component instance
   });
 
-  it('should create the app', () => {
-    expect(app).toBeTruthy();
+    it('should create the app', () => {
+        expect(app).toBeTruthy();
   });
 
-  it('should have a default title as "ng-cookbook"', () => {
-    expect(app.title).toBe('ng-cookbook');
-  });
+    it('should have a default title of "ng-cookbook"', () => {
+        expect(app.title).toBe('ng-cookbook');
+    });
+
 
 });
