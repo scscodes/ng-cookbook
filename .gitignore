@@ -125,4 +125,7 @@ e2e/*.map
 
 /core-services/.editorconfig
 /micro-frontend/.editorconfig
-!/core-services/package-lock.json
+/core-services/package-lock.json
+/service-worker/.editorconfig
+/service-worker/package-lock.json
+/service-worker/.vscode
