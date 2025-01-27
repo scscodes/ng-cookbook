@@ -59,20 +59,25 @@ self.addEventListener('fetch', (event) => {
   }
 });
 
-// Connectivity monitoring
+let lastStatus = 'online'; // Track the previous connectivity status
 function checkBackendConnectivity() {
-  return fetch(`${BACKEND_URL}/health-check`, { method: 'HEAD' })
+  fetch(`${BACKEND_URL}/health-check`, { method: 'HEAD' })
     .then(() => {
-      postMessageToClients({ type: 'connectivity', status: 'online' });
+      if (lastStatus !== 'online') {
+        lastStatus = 'online';
+        postMessageToClients({ type: 'connectivity', status: 'online' });
+      }
     })
     .catch(() => {
-      postMessageToClients({ type: 'connectivity', status: 'offline' });
+      if (lastStatus !== 'offline') {
+        lastStatus = 'offline';
+        postMessageToClients({ type: 'connectivity', status: 'offline' });
+      }
     });
 }
 
-// Periodically check backend connectivity
-setInterval(checkBackendConnectivity, 10000); // Every 10 seconds
-
+// Poll for connectivity changes
+setInterval(checkBackendConnectivity, 30000); // Check every 30 seconds
 // Post messages to app
 function postMessageToClients(message) {
   self.clients.matchAll().then((clients) => {

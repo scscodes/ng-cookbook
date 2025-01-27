@@ -21,22 +21,47 @@ This README describes how to configure a service worker to:
 
 ```html
 <script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js').then((registration) => {
-      console.log('[Service Worker] Registered:', registration);
+  if ('serviceWorker' in navigator && environment.production) {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then((registration) => {
+        console.log('[Service Worker] Registered:', registration);
 
-      navigator.serviceWorker.addEventListener('message', (event) => {
-        if (event.data.type === 'connectivity') {
-          console.log(`[Connectivity] Status: ${event.data.status}`);
-          // Notify the app about the connectivity status
-          window.dispatchEvent(new CustomEvent('backendConnectivity', { detail: event.data.status }));
-        }
+        navigator.serviceWorker.addEventListener('message', (event) => {
+          if (event.data.type === 'connectivity') {
+            window.dispatchEvent(
+              new CustomEvent('backendConnectivity', { detail: event.data.status })
+            );
+          }
+        });
+      })
+      .catch((error) => {
+        console.error('[Service Worker] Registration failed:', error);
       });
-    });
   }
 </script>
+```
+
+### Update `angular.json` for env file replacements
+```json
+"configurations": {
+  "production": {
+    "fileReplacements": [
+      {
+        "replace": "src/environments/environment.ts",
+        "with": "src/environments/environment.prod.ts"
+      }
+    ],
+    "outputHashing": "all",
+    "assets": [
+      "src/favicon.ico",
+      "src/assets",
+      "src/service-worker.js"
+    ]
+  }
+}
 
 ```
+
 ### Create service to monitor events
 ```typescript
 import { Injectable } from '@angular/core';
