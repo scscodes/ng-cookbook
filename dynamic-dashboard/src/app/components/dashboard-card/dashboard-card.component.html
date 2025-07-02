@@ -1,0 +1,10 @@
+<div class="card">
+  <div class="icon">{{ item.icon }}</div>
+  <h3>{{ item.title }}</h3>
+  <p class="primary">{{ item.primaryValue }}</p>
+  <p *ngIf="item.secondaryValue" class="secondary">{{ item.secondaryValue }}</p>
+  <ul>
+    <li *ngFor="let m of item.meta">{{ m.label }}: {{ m.value }}</li>
+  </ul>
+  <button *ngIf="item.cta" (click)="item.cta.action()">{{ item.cta.label }}</button>
+</div>

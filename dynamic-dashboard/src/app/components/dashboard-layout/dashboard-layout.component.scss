@@ -1,0 +1,92 @@
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.dashboard-container {
+  width: 100%;
+}
+
+.layout-controls {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.control-group label {
+  color: white;
+  font-weight: 500;
+  font-size: 0.9rem;
+  min-width: 60px;
+}
+
+.column-buttons, .layout-presets {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.column-buttons button, .layout-presets button {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
+  min-width: 40px;
+}
+
+.column-buttons button:hover, .layout-presets button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.column-buttons button.active, .layout-presets button.active {
+  background: white;
+  color: #667eea;
+  font-weight: 600;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 768px) {
+  .dashboard {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+    padding: 16px !important;
+  }
+  
+  .layout-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+  
+  .control-group {
+    justify-content: space-between;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .dashboard {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 18px !important;
+  }
+} 

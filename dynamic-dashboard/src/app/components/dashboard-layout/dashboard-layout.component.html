@@ -1,0 +1,34 @@
+<div class="dashboard-container">
+  <!-- Layout Controls - shown when user customization is enabled -->
+  <div class="layout-controls" *ngIf="config.allowUserCustomization">
+    <div class="control-group">
+      <label>Columns:</label>
+      <div class="column-buttons">
+        <button 
+          *ngFor="let cols of [1,2,3,4,6]" 
+          [class.active]="config.columns === cols"
+          (click)="onColumnChange(cols)"
+          [attr.aria-label]="cols + ' columns'">
+          {{ cols }}
+        </button>
+      </div>
+    </div>
+    
+    <div class="control-group">
+      <label>Layout:</label>
+      <div class="layout-presets">
+        <button 
+          *ngFor="let preset of layoutPresets" 
+          [class.active]="currentPreset === preset.id"
+          (click)="onPresetChange(preset)">
+          {{ preset.name }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard Grid -->
+  <div class="dashboard" [ngStyle]="gridStyle">
+    <app-dashboard-card *ngFor="let item of items" [item]="item"></app-dashboard-card>
+  </div>
+</div>
